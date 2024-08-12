@@ -1,10 +1,34 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, Image, FlatList, TouchableOpacity} from 'react-native';
+import banner from '../assets/banner.jpeg';
+import {services} from '../data/services';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
 
-const Home = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const Home = ({navigation}: Props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.headingText}>This is home screen</Text>
+      <Image source={banner} style={styles.banner} />
+      <Text style={styles.normalText}>
+        Horizon Solutions is a software development platform. Build your software with us.
+      </Text>
+
+      <Text style={styles.headingText}>Our Services</Text>
+      <View>
+        <FlatList
+          numColumns={2}
+          data={services}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.serviceItem}
+              onPress={() => navigation.navigate('ServiceDetails', {service: item})}>
+              <Text style={styles.serviceText}>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={item => item.id.toString()}
+        />
+      </View>
     </View>
   );
 };
@@ -12,59 +36,41 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#000435',
+    padding: 10,
   },
-  logo: {
-    width: 150,
-    height: 100,
+  banner: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
   },
   headingText: {
     color: '#fff',
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginTop: 40,
-    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 45,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   normalText: {
     color: '#fff',
     fontSize: 16,
-    marginTop: 20,
-  },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
     marginTop: 5,
   },
-  button: {
-    backgroundColor: '#1E90FF',
+  serviceItem: {
+    backgroundColor: '#000750',
+    height: 90,
     padding: 10,
     borderRadius: 5,
+    marginVertical: 5,
+    marginHorizontal: 5,
+    flex: 1,
     alignItems: 'center',
-    width: '80%',
-    marginTop: 10,
+    justifyContent: 'center',
   },
-  buttonText: {
+  serviceText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  linkText: {
-    color: '#1E90FF',
     fontSize: 16,
-    marginTop: 20,
   },
 });
 

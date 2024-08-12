@@ -16,11 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../App';
 
-interface IInputData {
-  email: string;
-  password: string;
-}
-
 type LoginProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const Login = ({navigation}: LoginProps) => {
@@ -32,7 +27,7 @@ const Login = ({navigation}: LoginProps) => {
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit = async (data: IInputData) => {
+  const onSubmit = async (data: ILoginInput) => {
     const user = users.find(
       u => u.email === data.email && u.password === data.password,
     );

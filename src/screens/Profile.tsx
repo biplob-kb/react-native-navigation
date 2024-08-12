@@ -8,12 +8,16 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../App';
+// import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+// import {RootStackParamList} from '../App';
 
-type ProfileProps = NativeStackScreenProps<RootStackParamList, 'Profile'>;
+// type ProfileProps = BottomTabScreenProps<RootStackParamList, 'Profile'>;
+type ProfileProps = {
+  navigation?: any;
+  route?: any;
+};
 
-const Profile = ({navigation}: ProfileProps) => {
+const Profile: React.FC<ProfileProps> = ({navigation}) => {
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
